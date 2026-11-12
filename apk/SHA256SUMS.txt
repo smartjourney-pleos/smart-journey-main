@@ -1,2 +1,4 @@
+8c18faba548130ec9b93c0ceb17401f246a32f4b42aeb100a2527669668579fb  smart-journey-0.2.10-release.apk
+d2e737f25ceda45ccb3ce7afbc915b1ecf96032d29dc8d5e251992d8b09a0f1e  smart-journey-0.2.10-demo-debug.apk
 b938d5284c82b1e53bd70c9c241f0bdfffe0a066ef2b3756af525c07595f26dc  smart-journey-0.2.8-demo-debug.apk
 4359ac082b2d3d457badc1c00b16c26400a4aea24a9421940a61d2fcd63bad07  smart-journey-0.2.8-release.apk
