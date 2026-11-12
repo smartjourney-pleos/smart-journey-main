@@ -6,8 +6,8 @@
 
 | 바로 가기 | |
 | --- | --- |
-| APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.0-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.0-release.apk` |
-| 소스 코드 (제출 시점 고정) | [smart-journey-android @ `v0.2.0-submission1`](https://github.com/smartjourney-pleos/smart-journey-android/tree/v0.2.0-submission1) |
+| APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.1-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.1-release.apk` |
+| 소스 코드 (제출 시점 고정) | [smart-journey-android @ `v0.2.1-submission1`](https://github.com/smartjourney-pleos/smart-journey-android/tree/v0.2.1-submission1) |
 | 화면 | [아래 화면 구성](#화면-구성) · [`docs/screenshots/`](docs/screenshots/) |
 | 검증 기록 | [`docs/verification-2026-11-12.md`](docs/verification-2026-11-12.md) |
 
@@ -46,13 +46,14 @@
 4. **도착 후:** 운전자가 가족 3명을 먼저 내려 주면 "일행 3명 도착 추정 · 1명 이동 중", 주차 후 운전자가 내리면 4/4 하차 추정.
 5. **정차 후:** 방문 현황에서 접수 번호·인원·상태를 확인합니다.
 
-## 5. 개발 현황 (2026-11-12, 앱 0.2.0)
+## 5. 개발 현황 (2026-11-12, 앱 0.2.1)
 
 | 구분 | 내용 |
 | --- | --- |
 | **실제 SDK로 동작 (에뮬레이터 확인)** | 내비 경로 입력(`requestRouteWithWaypoints`)과 내비 화면 전환, 남은 시간 조회(`requestTrip`, 30초 주기), 좌석·도어 지원 여부 확인(Vehicle SDK), 주행 규제 상태(`CarUxRestrictions`), Pleos TTS 질문 → STT 응답(ON_DEVICE), Gleo App Schema 2개(`GET_SMART_JOURNEY_STATUS`, `RESPOND_SMART_JOURNEY_PROMPT`) |
 | **데모 입력으로 동작** | 주행 중 남은 시간 감소와 도착 이벤트, 문 열림·좌석 변화(하차), 매장 대기·호출·착석(`FakeBackend`). 에뮬레이터에서 차량을 움직이거나 좌석 값을 바꿀 수 없어 디버그 빌드의 데모 패널로 넣습니다. 화면마다 **실제 SDK / 데모 입력** 배지를 표시합니다. |
 | **구현했지만 에뮬레이터에서 미확인** | 안내 중 내비가 보내는 실시간 `onTripInfo` 구독. 에뮬레이터 차량이 목적지 앞에 고정돼 있고 주행 시뮬레이션을 쓸 수 없어 콜백 수신을 확인하지 못했습니다. |
+| **연동 준비** | 웹 POS와 공유하는 [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server) REST 연동 코드(디버그 빌드 스위치). 서버의 접수·POS API가 아직 구현 전이라 1차 시연은 앱 안 시연 데이터로 진행합니다. |
 | **미구현·검증 과제** | 실제 운전자 마이크·차내 소음 인식, Gleo 자연어 호출부터 결과 응답까지의 전체 흐름, 실제 서버 접수와 공식 매장·POS 연동, 차량 전화 연결, 실차 좌석·도어 변화 |
 
 - 음성 인식 확인은 사람 발화가 아니라 **합성 한국어 음성**을 실제 Pleos ASR에 넣은 결과입니다. "응" → 승인, "나중에" → 보류로 인식됐고, "걸어 줘"는 "그렇죠" 등으로 인식돼 실행되지 않았습니다(모호한 답 미실행).
@@ -62,17 +63,17 @@
 
 | 파일 | 용도 |
 | --- | --- |
-| `smart-journey-0.2.0-demo-debug.apk` | **시연용.** 데모 패널(상단 "데모" 버튼)과 adb 신호 주입이 들어 있어 에뮬레이터에서 전체 흐름을 볼 수 있습니다. 디버그 인증서로 서명됩니다. |
-| `smart-journey-0.2.0-release.apk` | 배포 빌드(릴리스 키 서명, versionCode 2). 데모 도구가 없고 실제 차량 신호만 씁니다. 에뮬레이터에서는 차량이 움직이지 않아 주행 이후 흐름이 진행되지 않습니다. |
+| `smart-journey-0.2.1-demo-debug.apk` | **시연용.** 데모 패널(상단 "데모" 버튼)과 adb 신호 주입이 들어 있어 에뮬레이터에서 전체 흐름을 볼 수 있습니다. 디버그 인증서로 서명됩니다. |
+| `smart-journey-0.2.1-release.apk` | 배포 빌드(릴리스 키 서명, versionCode 3). 데모 도구가 없고 실제 차량 신호만 씁니다. 에뮬레이터에서는 차량이 움직이지 않아 주행 이후 흐름이 진행되지 않습니다. |
 
 무결성은 [`apk/SHA256SUMS.txt`](apk/SHA256SUMS.txt)로 확인합니다. 두 APK는 같은 패키지명이라 바꿔 설치할 때 먼저 지웁니다.
 
 ```bash
-adb install -r -g apk/smart-journey-0.2.0-demo-debug.apk
+adb install -r -g apk/smart-journey-0.2.1-demo-debug.apk
 adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 ```
 
-Pleos Connect Emulator v2.1.0(API 34), Vehicle 서비스 2.3.13·Navi 서비스 2.0.1 이상이 필요합니다. 시연 순서: 동의 → 홈에서 방문지 선택 → **방문 시작** → 데모 패널에서 남은 시간 −5분 / "대기 90분 만들기" / "도착 이벤트" / "일행 3명 하차" · "운전자 하차". 터미널 명령은 [Android README](https://github.com/smartjourney-pleos/smart-journey-android/tree/v0.2.0-submission1#시연-방법)를 참고하세요.
+Pleos Connect Emulator v2.1.0(API 34), Vehicle 서비스 2.3.13·Navi 서비스 2.0.1 이상이 필요합니다. 시연 순서: 동의 → 홈에서 방문지 선택 → **방문 시작** → 데모 패널에서 남은 시간 −5분 / "대기 90분 만들기" / "도착 이벤트" / "일행 3명 하차" · "운전자 하차". 터미널 명령은 [Android README](https://github.com/smartjourney-pleos/smart-journey-android/tree/v0.2.1-submission1#시연-방법)를 참고하세요.
 
 ## 화면 구성
 
@@ -84,13 +85,13 @@ Pleos Connect Emulator v2.1.0(API 34), Vehicle 서비스 2.3.13·Navi 서비스 
 | **5. 도착 후 확인 — 일부 하차** | **6. 확인 필요(예외·미지원)** |
 | ![일부 하차](docs/screenshots/05-arrival-partial.png) | ![예외](docs/screenshots/06-issues.png) |
 
-주행 중 앱을 열면 편집 없이 상태만 보입니다([03b](docs/screenshots/03b-driving-status.png)). 좁은 창·야간 테마 예: [07](docs/screenshots/07-status-narrow-night.png). 에뮬레이터 내장 지도의 배경 타일이 비어 보이는 것은 에뮬레이터 지도 데이터 문제이며 앱 화면과 무관합니다.
+방문 현황은 요약·도착 예상·접수 번호·앞 팀·진행 단계·다음 행동·도착 후 확인을 한 화면에 보여 줍니다. 주행 중 앱을 열면 편집 없이 상태만 보입니다([03b](docs/screenshots/03b-driving-status.png)). 좁은 창·야간 테마 예: [07](docs/screenshots/07-status-narrow-night.png). 에뮬레이터 내장 지도의 배경 타일이 비어 보이는 것은 에뮬레이터 지도 데이터 문제이며 앱 화면과 무관합니다.
 
 ## 구성
 
 ```mermaid
 flowchart LR
-  subgraph CAR["차량 앱 (Android, 0.2.0)"]
+  subgraph CAR["차량 앱 (Android, 0.2.1)"]
     UI["정차 중 화면: 동의·홈·방문 현황·확인 필요"]
     ENGINE["여정 엔진 + 포그라운드 서비스"]
     VOICE["Pleos TTS → STT · Gleo App Schema"]
@@ -113,7 +114,7 @@ flowchart LR
 | 저장소 | 역할 | 기술 |
 | --- | --- | --- |
 | [smart-journey-main](https://github.com/smartjourney-pleos/smart-journey-main) | 작품 소개, 심사용 APK, 화면·검증 기록 | Markdown |
-| [smart-journey-android](https://github.com/smartjourney-pleos/smart-journey-android) | Pleos Connect 차량 앱. 1차 제출 소스는 태그 `v0.2.0-submission1` | Kotlin 2.0, Jetpack Compose, Coroutines/Flow, Vehicle SDK 2.3.2, NaviHelper 3.0.5, Pleos Speech SDK 3.3.1 |
+| [smart-journey-android](https://github.com/smartjourney-pleos/smart-journey-android) | Pleos Connect 차량 앱. 1차 제출 소스는 태그 `v0.2.1-submission1` | Kotlin 2.0, Jetpack Compose, Coroutines/Flow, Vehicle SDK 2.3.2, NaviHelper 3.0.5, Pleos Speech SDK 3.3.1 |
 | [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server) | 웨이팅·대기열·도착 API와 상태 이벤트 | Java 21, Spring Boot 3.5, REST, WebSocket/STOMP |
 | [smart-journey-web](https://github.com/smartjourney-pleos/smart-journey-web) | 대기열·호출·착석·데모 조작 웹 도구 | React 19, TypeScript, Vite |
 
