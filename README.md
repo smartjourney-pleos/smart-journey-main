@@ -6,9 +6,9 @@
 
 | 바로 가기 | |
 | --- | --- |
-| APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.3-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.3-release.apk` |
+| APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.4-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.4-release.apk` |
 | 실행 방법 | [아래 실행 방법](#실행-방법) — 테스트 환경, 설치, 시연 시나리오 2개 |
-| 소스 코드 (제출 시점 고정) | [smart-journey-android @ `v0.2.3-submission1`](https://github.com/smartjourney-pleos/smart-journey-android/tree/v0.2.3-submission1) · [zip 내려받기](https://github.com/smartjourney-pleos/smart-journey-android/archive/refs/tags/v0.2.3-submission1.zip) |
+| 소스 코드 (제출 시점 고정) | [smart-journey-android @ `v0.2.4-submission1`](https://github.com/smartjourney-pleos/smart-journey-android/tree/v0.2.4-submission1) · [zip 내려받기](https://github.com/smartjourney-pleos/smart-journey-android/archive/refs/tags/v0.2.4-submission1.zip) |
 | 화면 | [아래 화면 구성](#화면-구성) · [`docs/screenshots/`](docs/screenshots/) |
 | 검증 기록 | [`docs/verification-2026-11-12.md`](docs/verification-2026-11-12.md) |
 
@@ -47,7 +47,7 @@
 4. **도착 후:** 운전자가 가족 3명을 먼저 내려 주면 "일행 3명 도착 추정 · 1명 이동 중", 주차 후 운전자가 내리면 4/4 하차 추정.
 5. **정차 후:** 방문 현황에서 접수 번호·인원·상태를 확인합니다.
 
-## 5. 개발 현황 (2026-11-12, 앱 0.2.3)
+## 5. 개발 현황 (2026-11-12, 앱 0.2.4)
 
 | 구분 | 내용 |
 | --- | --- |
@@ -76,8 +76,8 @@
 
 | 파일 | 용도 |
 | --- | --- |
-| [`apk/smart-journey-0.2.3-demo-debug.apk`](apk/smart-journey-0.2.3-demo-debug.apk) | **시연용 (심사 시 이 파일 권장).** 데모 패널(상단 "데모" 버튼)이 있어 에뮬레이터에서 주행·도착·하차를 넣어 전체 흐름을 볼 수 있습니다. |
-| [`apk/smart-journey-0.2.3-release.apk`](apk/smart-journey-0.2.3-release.apk) | 배포 빌드(릴리스 키 서명, versionCode 5). 데모 도구가 없어 에뮬레이터에서는 주행 이후 흐름이 진행되지 않습니다. |
+| [`apk/smart-journey-0.2.4-demo-debug.apk`](apk/smart-journey-0.2.4-demo-debug.apk) | **시연용 (심사 시 이 파일 권장).** 데모 패널(상단 "데모" 버튼)이 있어 에뮬레이터에서 주행·도착·하차를 넣어 전체 흐름을 볼 수 있습니다. |
+| [`apk/smart-journey-0.2.4-release.apk`](apk/smart-journey-0.2.4-release.apk) | 배포 빌드(릴리스 키 서명, versionCode 6). 데모 도구가 없어 에뮬레이터에서는 주행 이후 흐름이 진행되지 않습니다. |
 
 무결성은 [`apk/SHA256SUMS.txt`](apk/SHA256SUMS.txt)로 확인합니다. 두 APK는 같은 패키지라 바꿔 설치할 때는 먼저 `adb uninstall com.smartjourney.vehicle`을 실행합니다.
 
@@ -85,7 +85,7 @@
 
 ```bash
 git clone https://github.com/smartjourney-pleos/smart-journey-main.git && cd smart-journey-main
-adb install -r -g apk/smart-journey-0.2.3-demo-debug.apk
+adb install -r -g apk/smart-journey-0.2.4-demo-debug.apk
 adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 ```
 
@@ -113,7 +113,7 @@ adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 
 - 데모 패널은 디버그 APK에만 있는 시연 도구입니다. 실제 차량에서는 이 값이 차량 신호와 내비에서 들어옵니다.
 - 에뮬레이터 내장 지도의 배경 타일이 비어 보이는 것은 에뮬레이터 지도 데이터 문제이며 앱과 무관합니다.
-- 터미널로 신호를 넣는 방법은 [Android README](https://github.com/smartjourney-pleos/smart-journey-android/tree/v0.2.3-submission1#시연-방법)에 있습니다.
+- 터미널로 신호를 넣는 방법은 [Android README](https://github.com/smartjourney-pleos/smart-journey-android/tree/v0.2.4-submission1#시연-방법)에 있습니다.
 
 ## 화면 구성
 
@@ -131,7 +131,7 @@ adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 
 ```mermaid
 flowchart LR
-  subgraph CAR["차량 앱 (Android, 0.2.3)"]
+  subgraph CAR["차량 앱 (Android, 0.2.4)"]
     UI["정차 중 화면: 동의·홈·방문 현황·확인 필요"]
     ENGINE["여정 엔진 + 포그라운드 서비스"]
     VOICE["Pleos TTS → STT · Gleo App Schema"]
@@ -154,7 +154,7 @@ flowchart LR
 | 저장소 | 역할 | 기술 |
 | --- | --- | --- |
 | [smart-journey-main](https://github.com/smartjourney-pleos/smart-journey-main) | 작품 소개, 심사용 APK, 화면·검증 기록 | Markdown |
-| [smart-journey-android](https://github.com/smartjourney-pleos/smart-journey-android) | Pleos Connect 차량 앱. 1차 제출 소스는 태그 `v0.2.3-submission1` | Kotlin 2.0, Jetpack Compose, Coroutines/Flow, Vehicle SDK 2.3.2, NaviHelper 3.0.5, Pleos Speech SDK 3.3.1 |
+| [smart-journey-android](https://github.com/smartjourney-pleos/smart-journey-android) | Pleos Connect 차량 앱. 1차 제출 소스는 태그 `v0.2.4-submission1` | Kotlin 2.0, Jetpack Compose, Coroutines/Flow, Vehicle SDK 2.3.2, NaviHelper 3.0.5, Pleos Speech SDK 3.3.1 |
 | [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server) | 웨이팅·대기열·도착 API와 상태 이벤트 | Java 21, Spring Boot 3.5, REST, WebSocket/STOMP |
 | [smart-journey-web](https://github.com/smartjourney-pleos/smart-journey-web) | 대기열·호출·착석·데모 조작 웹 도구 | React 19, TypeScript, Vite |
 
