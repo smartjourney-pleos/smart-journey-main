@@ -2,15 +2,16 @@
 
 > 순정 내비의 도착 시각으로 웨이팅 걸 시점을 계산해, 운전 중 음성 한마디로 접수하는 Pleos Connect 차량용 방문 준비 앱
 
-현대자동차그룹 차량용 앱 개발 공모전 1차 제출 저장소입니다. 1차 기획 검증용 프로토타입이며 최신 APK는 **0.2.10**입니다. 작품 소개, 심사용 APK, 소스 코드 위치, 화면과 검증 기록을 모았습니다.
+현대자동차그룹 차량용 앱 개발 공모전 1차 제출 저장소입니다. 1차 기획 검증용 프로토타입이며 최신 서명 release APK는 **0.2.11** (versionCode 13)입니다. 작품 소개, 심사용 APK, 소스 코드 위치, 화면과 검증 기록을 모았습니다.
 
 | 바로 가기 | |
 | --- | --- |
 | APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.10-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.10-release.apk`, 서버·웹 연동 시연용 `smart-journey-0.2.11-server-debug.apk`, 0.2.11 배포 빌드 `smart-journey-0.2.11-release.apk` (0.2.8 파일은 이전 버전) |
 | 실행 방법 | [아래 실행 방법](#실행-방법) — 테스트 환경, 설치, 시연 시나리오 · [서버·웹 POS와 함께 실행](#서버웹-pos와-함께-실행) |
-| 소스 코드 (0.2.10 고정) | [smart-journey-android @ `d84e740`](https://github.com/smartjourney-pleos/smart-journey-android/tree/d84e740ce14b6ba579ed0c7028e45386daeefe33) · [zip 내려받기](https://github.com/smartjourney-pleos/smart-journey-android/archive/d84e740ce14b6ba579ed0c7028e45386daeefe33.zip) |
+| 최신 APK 소스 코드 (0.2.11 고정) | [smart-journey-android @ `463798f`](https://github.com/smartjourney-pleos/smart-journey-android/tree/463798f) · [zip 내려받기](https://github.com/smartjourney-pleos/smart-journey-android/archive/463798f.zip) |
+| 시연 영상 | [0.2.11 실제 에뮬레이터 시연 MP4](docs/demo/SmartJourney-0.2.11-demo.mp4) — 앱에서 목적지 선택 → 순정 내비 전환 → 질문 → 정차 후 승인 → 하차 추정 → 호출. 한국어 합성 내레이션 포함 |
 | 화면 | [아래 화면 구성](#화면-구성) · [`docs/screenshots/`](docs/screenshots/) |
-| 검증 기록 | [0.2.10](docs/verification-0.2.10.md) · 이전: [0.2.8](docs/verification-0.2.8.md), [앱 전체](docs/verification-2026-11-12.md), [Gleo AI 음성 연동](docs/verification-gleo-2026-11-12.md) |
+| 검증 기록 | [제출 자료·APK 확인](docs/verification-0.2.11-submission.md) · [0.2.11](https://github.com/smartjourney-pleos/smart-journey-android/blob/main/docs/verification/release-0.2.11.md) · [0.2.10](docs/verification-0.2.10.md) · 이전: [0.2.8](docs/verification-0.2.8.md), [앱 전체](docs/verification-2026-11-12.md), [Gleo AI 음성 연동](docs/verification-gleo-2026-11-12.md) |
 
 > **시연용 데이터 · 실제 매장 미접수.** 기본 접수·대기열은 앱 안의 시연 데이터(`FakeBackend`)입니다. 0.2.11 디버그 빌드는 로컬 중계 서버·웹 POS에 접수할 수 있지만 서버의 매장도 시연용이라 실제 매장에는 접수되지 않습니다. 앱 화면에도 이 표시가 항상 보입니다.
 
@@ -33,7 +34,7 @@
 | --- | --- | --- |
 | 방문 계획 | 정차 중 홈에서 방문지·지원 방식·인원·대기 허용 시간 확인 | 좌석 점유로 탑승 인원을 **제안**하고 사용자가 확정 |
 | 도착 시각에 맞춘 음성 제안 | `남은 ETA ≤ 예상 대기 − 도착 여유(10분)`일 때 "42dot까지 20분, 대기는 30분이에요. 4명으로 지금 웨이팅을 걸까요?" | 안내 중인 경로의 ETA(NaviHelper)를 구독해 시점을 다시 계산 |
-| 음성 승인 | "응", "나중에"처럼 짧은 답. 무응답·모호한 답·만료·중복은 실행하지 않음 | 주행 중 팝업·헤드업·승인 화면 없이 내비 유지 |
+| 음성 승인 | "응", "나중에"처럼 짧은 답. 무응답·모호한 답·만료·중복은 실행하지 않음 | 내비를 유지하며 음성 처리. 표시 권한이 있는 환경의 보조 질문 카드는 아래 범위 참고 |
 | 대기 허용 초과 | 예상 대기가 허용 시간(기본 30분)보다 길면 "대기가 90분이에요. 그래도 걸까요?" 보류하면 접수하지 않고 다시 묻지 않음 | 대체 매장 자동 추천·경로 변경 없음 |
 | 방문 현황 | 요청 전·요청 중·확정·실패·확인 필요, 접수 번호(응답 후에만) | 응답 유실은 "확인 필요"로 두고 재접수하지 않음 |
 | 도착 후 확인 | 내비 도착 + 정차 + 문 열림·닫힘 + 좌석 감소 안정으로 하차 **추정** | 일부만 내리면 "일행 3명 도착 추정 · 1명 이동 중", 도착 완료로 보지 않음 |
@@ -48,7 +49,7 @@
 4. **도착 후:** 운전자가 가족 3명을 먼저 내려 주면 "일행 3명 도착 추정 · 1명 이동 중", 주차 후 운전자가 내리면 4/4 하차 추정.
 5. **정차 후:** 방문 현황에서 접수 번호·인원·상태를 확인합니다.
 
-## 5. 개발 현황 (2026-11-13, 앱 0.2.10)
+## 5. 개발 현황 (0.2.10 검증 기록 + 0.2.11 서버 연동)
 
 | 구분 | 내용 |
 | --- | --- |
@@ -57,7 +58,7 @@
 | **데모 입력으로 동작** | 주행 중 남은 시간 감소와 도착 이벤트, 문 열림·좌석 변화(하차), 매장 대기·호출·착석(`FakeBackend`). 에뮬레이터에서 차량을 움직이거나 좌석 값을 바꿀 수 없어 디버그 빌드의 데모 패널로 넣습니다. 화면마다 **실제 / 시연 입력** 배지를 표시합니다. |
 | **구현했지만 에뮬레이터에서 미확인** | 안내 중 내비가 보내는 실시간 `onTripInfo` 구독. 에뮬레이터 차량이 목적지 앞에 고정돼 있어 콜백 수신을 확인하지 못했습니다. |
 | **서버·웹 POS 연동 (0.2.11 디버그, 로컬 확인)** | 디버그 빌드의 "접수 백엔드" 스위치로 [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server)에 접수하고 [웹 POS](https://github.com/smartjourney-pleos/smart-journey-web)에서 대기 추가·호출·착석합니다. 2026-11-13 로컬 서버·웹·에뮬레이터로 웹 현장 +3팀 → 차량 질문(대기 15분) → 접수 → 웹에 하차 4/4 배지 → 웹 호출 → 차량 호출됨 → 착석 → 다음 매장까지 확인했습니다. 앱은 서버를 3초마다 조회하고(STOMP 미사용), 배포 서버가 없어 release 빌드는 앱 안 시연 데이터만 씁니다. |
-| **지도 위 질문 카드** | "다른 앱 위 표시" 권한이 있을 때만 뜹니다(10초 링, 주행 규제 중 터치 차단). 현재 Pleos 에뮬레이터 이미지에서는 사용자가 이 권한을 허용하는 설정 화면을 찾지 못해 일반 설치에서는 표시되지 않고 음성 질문이 기본입니다. 카드 동작은 권한을 따로 부여한 QA 환경에서만 확인했습니다. 이 에뮬레이터에서 관찰한 제약이며 공식 금지로 확인한 것은 아닙니다. |
+| **지도 위 질문 카드** | "다른 앱 위 표시" 권한이 있을 때만 뜹니다(10초 링, 주행 규제 중 터치 차단). 일반 설치의 기본 경로는 음성 질문입니다. 사용자가 이 권한을 허용하는 설정 화면을 찾지 못한 과거 기록이 있습니다. 이번 0.2.11 debug 녹화 환경에서는 설치 권한이 부여된 상태(`SYSTEM_ALERT_WINDOW: granted=true`)에서 내비 위 보조 질문 카드 표시를 확인했습니다. 이 화면을 모든 일반 설치에서 보장하지 않습니다. 이 에뮬레이터에서 관찰한 제약이며 공식 금지로 확인한 것은 아닙니다. |
 | **미구현·검증 과제** | Gleo로 승인하는 흐름(새 사용자 발화 증거 확보 전까지 차단), 사람이 말하는 마이크 입력과 Gleo 대화 전체, 순정 내비 "안내 종료" 전 확인(공개 SDK에 종료 전 이벤트 없음), 차내 소음 인식, 배포 서버·공식 매장 연동(로컬 서버 연동만 확인), 차량 전화 연결, 실차 좌석·도어 변화 |
 
 - 0.2.10 빌드: debug·release 빌드, 단위 테스트 87개 통과, lint 오류 0건. 별도 검증자가 서명 release APK와 Gleo 관련 테스트를 독립 확인했습니다([기록](docs/verification-0.2.10.md)).
@@ -79,20 +80,26 @@
 
 | 파일 | 용도 |
 | --- | --- |
-| [`apk/smart-journey-0.2.10-demo-debug.apk`](apk/smart-journey-0.2.10-demo-debug.apk) | **시연용 (심사 시 이 파일 권장).** 데모 패널(상단 "데모" 버튼)이 있어 에뮬레이터에서 주행·도착·하차를 넣어 전체 흐름을 볼 수 있습니다. 소스 커밋 `d84e740`의 디버그 빌드입니다. |
+| [`apk/smart-journey-0.2.10-demo-debug.apk`](apk/smart-journey-0.2.10-demo-debug.apk) | **이전 시연용 (0.2.10).** 데모 패널(상단 "데모" 버튼)이 있어 에뮬레이터에서 주행·도착·하차를 넣어 전체 흐름을 볼 수 있습니다. 소스 커밋 `d84e740`의 디버그 빌드입니다. |
 | [`apk/smart-journey-0.2.10-release.apk`](apk/smart-journey-0.2.10-release.apk) | 배포 빌드(릴리스 키 서명, versionCode 12). 데모 도구가 없어 에뮬레이터에서는 주행 이후 흐름이 진행되지 않습니다. |
-| [`apk/smart-journey-0.2.11-server-debug.apk`](apk/smart-journey-0.2.11-server-debug.apk) | **서버·웹 연동 시연용 (선택).** 0.2.10 디버그에 서버 연결용 고지 버전만 맞춘 빌드(versionCode 13, 소스 커밋 `463798f`). [서버·웹 POS와 함께 실행](#서버웹-pos와-함께-실행)에 씁니다. 서버 없이도 0.2.10 디버그와 같이 동작하지만 처음 실행 때 다시 동의를 받습니다. |
+| [`apk/smart-journey-0.2.11-server-debug.apk`](apk/smart-journey-0.2.11-server-debug.apk) | **최신 시연용 (0.2.11, 데모 패널 포함).** 0.2.10 디버그에 서버 연결용 고지 버전만 맞춘 빌드(versionCode 13, 소스 커밋 `463798f`). [서버·웹 POS와 함께 실행](#서버웹-pos와-함께-실행)에 씁니다. 서버 없이도 0.2.10 디버그와 같이 동작하지만 처음 실행 때 다시 동의를 받습니다. |
 | [`apk/smart-journey-0.2.11-release.apk`](apk/smart-journey-0.2.11-release.apk) | 0.2.11 배포 빌드(0.2.10과 같은 릴리스 키 서명, versionCode 13, 소스 커밋 `463798f`). 0.2.10 위에 업데이트 설치됩니다. 0.2.10과 달라진 것은 고지 버전뿐이라 처음 실행 때 다시 동의를 받고, 배포 서버가 없어 접수는 앱 안 시연 데이터입니다. |
 | `apk/smart-journey-0.2.8-*.apk` | **이전 버전(최신 아님).** Gleo 승인 차단 전 빌드로, 비교용으로만 남겨 두었습니다. |
 
-무결성은 [`apk/SHA256SUMS.txt`](apk/SHA256SUMS.txt)로 확인합니다. 모든 APK는 같은 패키지라 바꿔 설치할 때는 먼저 `adb uninstall com.smartjourney.vehicle`을 실행합니다.
+최신 release의 SHA-256은 `71a5390515550f526d86026cd611e39fffbf9e928421ca212cb82fc359d9f464`입니다. 0.2.11 release는 데모 패널과 서버 연결 설정이 없으며 앱 내부 시연 데이터를 사용합니다. 전체 에뮬레이터 시연은 0.2.11 debug를 사용합니다.
+
+무결성은 [`apk/SHA256SUMS.txt`](apk/SHA256SUMS.txt)로 확인합니다. 0.2.10 release → 0.2.11 release는 같은 인증서여서 `adb install -r`로 업데이트할 수 있습니다. debug ↔ release는 서명 키가 달라 기존 앱을 먼저 삭제해야 합니다. 삭제하면 앱 데이터도 사라집니다. 여러 기기가 연결되어 있으면 모든 adb 명령에 `-s <serial>`을 지정합니다.
 
 ### 1. 설치·실행
 
+아래 명령은 데모 패널이 있는 debug 시연본 설치 예입니다. `<serial>`을 그대로 입력하지 말고 실제 대상 기기를 지정합니다. 서명 release 확인은 같은 위치의 `smart-journey-0.2.11-release.apk`를 사용합니다.
+
 ```bash
 git clone https://github.com/smartjourney-pleos/smart-journey-main.git && cd smart-journey-main
-adb install -r -g apk/smart-journey-0.2.10-demo-debug.apk
-adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
+adb devices -l
+SERIAL=emulator-5580 # adb devices에서 확인한 대상 serial로 변경
+adb -s "$SERIAL" install -r -g apk/smart-journey-0.2.11-server-debug.apk
+adb -s "$SERIAL" shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 ```
 
 에뮬레이터 앱 목록의 **스마트 저니** 아이콘으로도 열 수 있습니다.
@@ -131,6 +138,8 @@ adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 
 ### 서버·웹 POS와 함께 실행
 
+차량 앱 설치 명령의 `SERIAL`은 위에서 확인한 대상 기기 값으로 설정합니다.
+
 중계 서버·웹 POS·차량 앱을 한 컴퓨터에서 함께 돌려 **웹에서 대기를 늘리면 차량이 묻고, 차량이 접수·하차하면 웹에 뜨고, 웹에서 호출하면 차량에 알림**이 오는 흐름을 봅니다. 각 저장소의 `main`을 받습니다.
 
 | 준비물 | 버전 |
@@ -149,8 +158,8 @@ git clone https://github.com/smartjourney-pleos/smart-journey-web.git
 cd smart-journey-web && npm install && npm run dev
 
 # 3) 차량 앱 — 서버 연동 디버그 APK
-adb install -r -g apk/smart-journey-0.2.11-server-debug.apk
-adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
+adb -s "$SERIAL" install -r -g apk/smart-journey-0.2.11-server-debug.apk
+adb -s "$SERIAL" shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 ```
 
 1. 웹에서 매장 **42dot**, PIN `1234`로 로그인합니다. 상단에 "실시간 연동 중"이 보이면 서버에 붙은 것입니다(서버가 꺼져 있으면 목 데이터로 들어갑니다).
@@ -172,7 +181,7 @@ adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 
 - 데모 패널은 디버그 APK에만 있는 시연 도구입니다. 실제 차량에서는 이 값이 차량 신호와 내비에서 들어옵니다.
 - 에뮬레이터 내장 지도의 배경 타일이 비어 보이는 것은 에뮬레이터 지도 데이터 문제이며 앱과 무관합니다.
-- 터미널로 신호를 넣는 방법은 [Android README](https://github.com/smartjourney-pleos/smart-journey-android/tree/d84e740ce14b6ba579ed0c7028e45386daeefe33#시연-방법)에 있습니다.
+- 터미널로 신호를 넣는 방법은 [Android README](https://github.com/smartjourney-pleos/smart-journey-android/tree/463798f#시연-방법)에 있습니다.
 
 ## 화면 구성
 
@@ -190,7 +199,7 @@ adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 
 ```mermaid
 flowchart LR
-  subgraph CAR["차량 앱 (Android, 0.2.10)"]
+  subgraph CAR["차량 앱 (Android, 0.2.11)"]
     UI["정차 중 화면: 동의·홈·방문 현황·확인 필요"]
     ENGINE["여정 엔진 + 포그라운드 서비스"]
     VOICE["Pleos TTS → STT · Gleo 상태 조회"]
@@ -213,7 +222,7 @@ flowchart LR
 | 저장소 | 역할 | 기술 |
 | --- | --- | --- |
 | [smart-journey-main](https://github.com/smartjourney-pleos/smart-journey-main) | 작품 소개, 심사용 APK, 화면·검증 기록 | Markdown |
-| [smart-journey-android](https://github.com/smartjourney-pleos/smart-journey-android) | Pleos Connect 차량 앱. 0.2.10 소스는 main 커밋 `d84e740`(이전 제출 태그 `v0.2.8-submission1`은 이전 버전) | Kotlin 2.0, Jetpack Compose, Coroutines/Flow, Vehicle SDK 2.3.2, NaviHelper 3.0.5, Pleos Speech SDK 3.3.1 |
+| [smart-journey-android](https://github.com/smartjourney-pleos/smart-journey-android) | Pleos Connect 차량 앱. 최신 0.2.11 APK 소스는 커밋 `463798f` (0.2.10은 `d84e740`)(이전 제출 태그 `v0.2.8-submission1`은 이전 버전) | Kotlin 2.0, Jetpack Compose, Coroutines/Flow, Vehicle SDK 2.3.2, NaviHelper 3.0.5, Pleos Speech SDK 3.3.1 |
 | [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server) | 웨이팅·대기열·도착 API와 상태 이벤트. 로컬 실행·데모 매장 포함 | Java 21, Spring Boot 3.5, REST, WebSocket/STOMP |
 | [smart-journey-web](https://github.com/smartjourney-pleos/smart-journey-web) | 대기열·호출·착석·데모 조작 웹 도구 | React 19, TypeScript, Vite |
 
