@@ -6,13 +6,13 @@
 
 | 바로 가기 | |
 | --- | --- |
-| APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.10-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.10-release.apk` (0.2.8 파일은 이전 버전) |
-| 실행 방법 | [아래 실행 방법](#실행-방법) — 테스트 환경, 설치, 시연 시나리오 2개 |
+| APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.10-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.10-release.apk`, 서버·웹 연동 시연용 `smart-journey-0.2.11-server-debug.apk`, 0.2.11 배포 빌드 `smart-journey-0.2.11-release.apk` (0.2.8 파일은 이전 버전) |
+| 실행 방법 | [아래 실행 방법](#실행-방법) — 테스트 환경, 설치, 시연 시나리오 · [서버·웹 POS와 함께 실행](#서버웹-pos와-함께-실행) |
 | 소스 코드 (0.2.10 고정) | [smart-journey-android @ `d84e740`](https://github.com/smartjourney-pleos/smart-journey-android/tree/d84e740ce14b6ba579ed0c7028e45386daeefe33) · [zip 내려받기](https://github.com/smartjourney-pleos/smart-journey-android/archive/d84e740ce14b6ba579ed0c7028e45386daeefe33.zip) |
 | 화면 | [아래 화면 구성](#화면-구성) · [`docs/screenshots/`](docs/screenshots/) |
 | 검증 기록 | [0.2.10](docs/verification-0.2.10.md) · 이전: [0.2.8](docs/verification-0.2.8.md), [앱 전체](docs/verification-2026-11-12.md), [Gleo AI 음성 연동](docs/verification-gleo-2026-11-12.md) |
 
-> **시연용 데이터 · 실제 매장 미접수.** 접수·대기열은 앱 안의 시연 데이터(`FakeBackend`)이며 실제 매장에 접수되지 않습니다. 앱 화면에도 이 표시가 항상 보입니다.
+> **시연용 데이터 · 실제 매장 미접수.** 기본 접수·대기열은 앱 안의 시연 데이터(`FakeBackend`)입니다. 0.2.11 디버그 빌드는 로컬 중계 서버·웹 POS에 접수할 수 있지만 서버의 매장도 시연용이라 실제 매장에는 접수되지 않습니다. 앱 화면에도 이 표시가 항상 보입니다.
 
 ---
 
@@ -56,9 +56,9 @@
 | **Gleo AI** | 0.2.10은 **상태 조회만** 연결합니다(스키마 함수 1개, 에뮬레이터 등록 확인). Gleo가 앱에 주는 값은 모델이 만든 파라미터뿐이라 사용자가 새로 답했는지 확인할 수 없어 **Gleo를 통한 접수·인원 변경 승인은 막았습니다.** 상태 조회 자연어 왕복은 이전 빌드(0.2.5)에서 Mac `say` 합성 음성을 호스트 마이크로 넣어 시험한 결과이며 0.2.10에서는 재시험하지 않았습니다. |
 | **데모 입력으로 동작** | 주행 중 남은 시간 감소와 도착 이벤트, 문 열림·좌석 변화(하차), 매장 대기·호출·착석(`FakeBackend`). 에뮬레이터에서 차량을 움직이거나 좌석 값을 바꿀 수 없어 디버그 빌드의 데모 패널로 넣습니다. 화면마다 **실제 / 시연 입력** 배지를 표시합니다. |
 | **구현했지만 에뮬레이터에서 미확인** | 안내 중 내비가 보내는 실시간 `onTripInfo` 구독. 에뮬레이터 차량이 목적지 앞에 고정돼 있어 콜백 수신을 확인하지 못했습니다. |
-| **연동 준비** | 웹 POS와 공유하는 [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server) REST 연동 코드(디버그 빌드 스위치). 서버 접수·POS API 구현 전이라 1차 시연은 앱 안 시연 데이터로 진행합니다. |
+| **서버·웹 POS 연동 (0.2.11 디버그, 로컬 확인)** | 디버그 빌드의 "접수 백엔드" 스위치로 [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server)에 접수하고 [웹 POS](https://github.com/smartjourney-pleos/smart-journey-web)에서 대기 추가·호출·착석합니다. 2026-11-13 로컬 서버·웹·에뮬레이터로 웹 현장 +3팀 → 차량 질문(대기 15분) → 접수 → 웹에 하차 4/4 배지 → 웹 호출 → 차량 호출됨 → 착석 → 다음 매장까지 확인했습니다. 앱은 서버를 3초마다 조회하고(STOMP 미사용), 배포 서버가 없어 release 빌드는 앱 안 시연 데이터만 씁니다. |
 | **지도 위 질문 카드** | "다른 앱 위 표시" 권한이 있을 때만 뜹니다(10초 링, 주행 규제 중 터치 차단). 현재 Pleos 에뮬레이터 이미지에서는 사용자가 이 권한을 허용하는 설정 화면을 찾지 못해 일반 설치에서는 표시되지 않고 음성 질문이 기본입니다. 카드 동작은 권한을 따로 부여한 QA 환경에서만 확인했습니다. 이 에뮬레이터에서 관찰한 제약이며 공식 금지로 확인한 것은 아닙니다. |
-| **미구현·검증 과제** | Gleo로 승인하는 흐름(새 사용자 발화 증거 확보 전까지 차단), 사람이 말하는 마이크 입력과 Gleo 대화 전체, 순정 내비 "안내 종료" 전 확인(공개 SDK에 종료 전 이벤트 없음), 차내 소음 인식, 실제 서버 접수와 공식 매장·POS 연동, 차량 전화 연결, 실차 좌석·도어 변화 |
+| **미구현·검증 과제** | Gleo로 승인하는 흐름(새 사용자 발화 증거 확보 전까지 차단), 사람이 말하는 마이크 입력과 Gleo 대화 전체, 순정 내비 "안내 종료" 전 확인(공개 SDK에 종료 전 이벤트 없음), 차내 소음 인식, 배포 서버·공식 매장 연동(로컬 서버 연동만 확인), 차량 전화 연결, 실차 좌석·도어 변화 |
 
 - 0.2.10 빌드: debug·release 빌드, 단위 테스트 87개 통과, lint 오류 0건. 별도 검증자가 서명 release APK와 Gleo 관련 테스트를 독립 확인했습니다([기록](docs/verification-0.2.10.md)).
 - 음성 인식 결과(합성 한국어 음성 "응" → 승인, "나중에" → 보류, "걸어 줘" → "그렇죠"로 인식돼 미실행)는 이전 빌드에서 확인한 것입니다. 0.2.10에서는 단위 테스트와 STT 요청 진입만 확인했습니다.
@@ -81,9 +81,11 @@
 | --- | --- |
 | [`apk/smart-journey-0.2.10-demo-debug.apk`](apk/smart-journey-0.2.10-demo-debug.apk) | **시연용 (심사 시 이 파일 권장).** 데모 패널(상단 "데모" 버튼)이 있어 에뮬레이터에서 주행·도착·하차를 넣어 전체 흐름을 볼 수 있습니다. 소스 커밋 `d84e740`의 디버그 빌드입니다. |
 | [`apk/smart-journey-0.2.10-release.apk`](apk/smart-journey-0.2.10-release.apk) | 배포 빌드(릴리스 키 서명, versionCode 12). 데모 도구가 없어 에뮬레이터에서는 주행 이후 흐름이 진행되지 않습니다. |
+| [`apk/smart-journey-0.2.11-server-debug.apk`](apk/smart-journey-0.2.11-server-debug.apk) | **서버·웹 연동 시연용 (선택).** 0.2.10 디버그에 서버 연결용 고지 버전만 맞춘 빌드(versionCode 13, 소스 커밋 `463798f`). [서버·웹 POS와 함께 실행](#서버웹-pos와-함께-실행)에 씁니다. 서버 없이도 0.2.10 디버그와 같이 동작하지만 처음 실행 때 다시 동의를 받습니다. |
+| [`apk/smart-journey-0.2.11-release.apk`](apk/smart-journey-0.2.11-release.apk) | 0.2.11 배포 빌드(0.2.10과 같은 릴리스 키 서명, versionCode 13, 소스 커밋 `463798f`). 0.2.10 위에 업데이트 설치됩니다. 0.2.10과 달라진 것은 고지 버전뿐이라 처음 실행 때 다시 동의를 받고, 배포 서버가 없어 접수는 앱 안 시연 데이터입니다. |
 | `apk/smart-journey-0.2.8-*.apk` | **이전 버전(최신 아님).** Gleo 승인 차단 전 빌드로, 비교용으로만 남겨 두었습니다. |
 
-무결성은 [`apk/SHA256SUMS.txt`](apk/SHA256SUMS.txt)로 확인합니다. 두 APK는 같은 패키지라 바꿔 설치할 때는 먼저 `adb uninstall com.smartjourney.vehicle`을 실행합니다.
+무결성은 [`apk/SHA256SUMS.txt`](apk/SHA256SUMS.txt)로 확인합니다. 모든 APK는 같은 패키지라 바꿔 설치할 때는 먼저 `adb uninstall com.smartjourney.vehicle`을 실행합니다.
 
 ### 1. 설치·실행
 
@@ -127,6 +129,45 @@ adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
 3. 시나리오 A로 접수를 확정한 뒤 같은 방법으로 내비 안내를 끝내면 방문과 접수는 유지되고 "이미 접수한 웨이팅은 유지돼요" 알림이 뜹니다.
 4. 방문 현황의 **방문 끝내기**는 접수한 방문이면 확인창("계속 안내" / "안내 종료")을 거치며 접수는 취소하지 않습니다.
 
+### 서버·웹 POS와 함께 실행
+
+중계 서버·웹 POS·차량 앱을 한 컴퓨터에서 함께 돌려 **웹에서 대기를 늘리면 차량이 묻고, 차량이 접수·하차하면 웹에 뜨고, 웹에서 호출하면 차량에 알림**이 오는 흐름을 봅니다. 각 저장소의 `main`을 받습니다.
+
+| 준비물 | 버전 |
+| --- | --- |
+| JDK | 21 (서버) |
+| Node.js | 22 이상 (웹) |
+| 에뮬레이터 | 위와 같은 Pleos Connect Emulator. 앱은 호스트 서버를 `http://10.0.2.2:8080`으로 부릅니다(디버그 빌드 고정) |
+
+```bash
+# 1) 중계 서버 — http://localhost:8080 (H2 파일 DB + 데모 매장 자동, Swagger /swagger-ui.html)
+git clone https://github.com/smartjourney-pleos/smart-journey-server.git
+cd smart-journey-server && ./gradlew bootRun
+
+# 2) 웹 POS — 새 터미널, http://localhost:5173 (/api·/ws는 8080으로 프록시)
+git clone https://github.com/smartjourney-pleos/smart-journey-web.git
+cd smart-journey-web && npm install && npm run dev
+
+# 3) 차량 앱 — 서버 연동 디버그 APK
+adb install -r -g apk/smart-journey-0.2.11-server-debug.apk
+adb shell am start --user 10 -n com.smartjourney.vehicle/.MainActivity
+```
+
+1. 웹에서 매장 **42dot**, PIN `1234`로 로그인합니다. 상단에 "실시간 연동 중"이 보이면 서버에 붙은 것입니다(서버가 꺼져 있으면 목 데이터로 들어갑니다).
+2. 앱에서 동의 → 상단 **데모** → **접수 백엔드** 스위치를 켭니다("서버 연동 (http://10.0.2.2:8080)"). 방문 중에는 바꿀 수 없습니다.
+3. 웹 시연 패널에서 **+3팀 골든타임 시연** → 매장 대기 15분.
+4. 앱에서 **방문 시작**(42dot → 소프트웨어드림센터) → 데모 패널 **주행**의 −5분 버튼으로 남은 시간을 5분 이하(대기 15분 − 도착 여유 10분)로 줄이면 질문이 나옵니다 → 승인(음성 "응" 또는 정차 후 화면). 웹 대기열에 **차량 인증** 카드가 생깁니다.
+5. 앱 데모 패널에서 도착 → 4명 하차 → 웹 카드에 **4/4명 하차 완료**.
+6. 웹에서 **호출** → 3초 안에 앱에 호출 알림 → 웹에서 **착석** → 앱이 다음 매장으로 넘어갑니다.
+
+데모 매장은 앱·서버·웹 모두 42dot(1)·소프트웨어드림센터(2)입니다(Pleos 샘플 내비 POI, 웨이팅은 시연 데이터). 다시 하려면 웹의 **시연 초기 상태로 리셋**을 누릅니다. 연동 API와 확인 결과는 [앱 저장소 서버 연동 문서](https://github.com/smartjourney-pleos/smart-journey-android/blob/main/docs/development/server-integration.md)에 있습니다.
+
+| 문제 | 확인 |
+| --- | --- |
+| 앱 매장 목록이 비거나 "접수 서버에 연결하지 못했어요" | 서버가 8080에서 떠 있는지, 0.2.10이 아니라 **0.2.11** APK인지(고지 버전이 서버와 같아야 기기 등록이 됨) |
+| 웹에 다른 매장·가짜 팀이 보임 | 서버가 꺼져 목 데이터로 로그인된 것. 서버를 띄우고 다시 로그인 |
+| 웹 매장 이름이 A 맛집·B 카페 | 이전 서버 버전. 서버 `main`을 다시 받으면 기존 DB도 새 매장으로 바뀝니다 |
+
 ### 참고
 
 - 데모 패널은 디버그 APK에만 있는 시연 도구입니다. 실제 차량에서는 이 값이 차량 신호와 내비에서 들어옵니다.
@@ -161,9 +202,9 @@ flowchart LR
   NAVI["Pleos 순정 내비 (NaviHelper)"] -->|"ETA·도착"| ENGINE
   ENGINE -->|"목적지"| NAVI
   VEH["좌석·도어·주행 규제 (Vehicle SDK·CarUx)"] --> ENGINE
-  SERVER["중계 서버 (별도 저장소, 연동 예정)"]
+  SERVER["중계 서버 (별도 저장소)"]
   WEB["웹 대기열·시연 도구"]
-  ENGINE -. "HTTP·STOMP 연동 예정" .-> SERVER
+  ENGINE -. "REST (0.2.11 디버그, 로컬)" .-> SERVER
   WEB <--> SERVER
 ```
 
@@ -173,7 +214,7 @@ flowchart LR
 | --- | --- | --- |
 | [smart-journey-main](https://github.com/smartjourney-pleos/smart-journey-main) | 작품 소개, 심사용 APK, 화면·검증 기록 | Markdown |
 | [smart-journey-android](https://github.com/smartjourney-pleos/smart-journey-android) | Pleos Connect 차량 앱. 0.2.10 소스는 main 커밋 `d84e740`(이전 제출 태그 `v0.2.8-submission1`은 이전 버전) | Kotlin 2.0, Jetpack Compose, Coroutines/Flow, Vehicle SDK 2.3.2, NaviHelper 3.0.5, Pleos Speech SDK 3.3.1 |
-| [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server) | 웨이팅·대기열·도착 API와 상태 이벤트 | Java 21, Spring Boot 3.5, REST, WebSocket/STOMP |
+| [smart-journey-server](https://github.com/smartjourney-pleos/smart-journey-server) | 웨이팅·대기열·도착 API와 상태 이벤트. 로컬 실행·데모 매장 포함 | Java 21, Spring Boot 3.5, REST, WebSocket/STOMP |
 | [smart-journey-web](https://github.com/smartjourney-pleos/smart-journey-web) | 대기열·호출·착석·데모 조작 웹 도구 | React 19, TypeScript, Vite |
 
 ## 개인정보와 안전 원칙
