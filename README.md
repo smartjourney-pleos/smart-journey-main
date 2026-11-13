@@ -6,7 +6,7 @@
 
 | 바로 가기 | |
 | --- | --- |
-| APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.10-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.10-release.apk`, 서버·웹 연동 시연용 `smart-journey-0.2.11-server-debug.apk` (0.2.8 파일은 이전 버전) |
+| APK | [`apk/`](apk/) — 시연용 `smart-journey-0.2.10-demo-debug.apk`, 배포 빌드 `smart-journey-0.2.10-release.apk`, 서버·웹 연동 시연용 `smart-journey-0.2.11-server-debug.apk`, 0.2.11 배포 빌드 `smart-journey-0.2.11-release.apk` (0.2.8 파일은 이전 버전) |
 | 실행 방법 | [아래 실행 방법](#실행-방법) — 테스트 환경, 설치, 시연 시나리오 · [서버·웹 POS와 함께 실행](#서버웹-pos와-함께-실행) |
 | 소스 코드 (0.2.10 고정) | [smart-journey-android @ `d84e740`](https://github.com/smartjourney-pleos/smart-journey-android/tree/d84e740ce14b6ba579ed0c7028e45386daeefe33) · [zip 내려받기](https://github.com/smartjourney-pleos/smart-journey-android/archive/d84e740ce14b6ba579ed0c7028e45386daeefe33.zip) |
 | 화면 | [아래 화면 구성](#화면-구성) · [`docs/screenshots/`](docs/screenshots/) |
@@ -82,6 +82,7 @@
 | [`apk/smart-journey-0.2.10-demo-debug.apk`](apk/smart-journey-0.2.10-demo-debug.apk) | **시연용 (심사 시 이 파일 권장).** 데모 패널(상단 "데모" 버튼)이 있어 에뮬레이터에서 주행·도착·하차를 넣어 전체 흐름을 볼 수 있습니다. 소스 커밋 `d84e740`의 디버그 빌드입니다. |
 | [`apk/smart-journey-0.2.10-release.apk`](apk/smart-journey-0.2.10-release.apk) | 배포 빌드(릴리스 키 서명, versionCode 12). 데모 도구가 없어 에뮬레이터에서는 주행 이후 흐름이 진행되지 않습니다. |
 | [`apk/smart-journey-0.2.11-server-debug.apk`](apk/smart-journey-0.2.11-server-debug.apk) | **서버·웹 연동 시연용 (선택).** 0.2.10 디버그에 서버 연결용 고지 버전만 맞춘 빌드(versionCode 13, 소스 커밋 `463798f`). [서버·웹 POS와 함께 실행](#서버웹-pos와-함께-실행)에 씁니다. 서버 없이도 0.2.10 디버그와 같이 동작하지만 처음 실행 때 다시 동의를 받습니다. |
+| [`apk/smart-journey-0.2.11-release.apk`](apk/smart-journey-0.2.11-release.apk) | 0.2.11 배포 빌드(0.2.10과 같은 릴리스 키 서명, versionCode 13, 소스 커밋 `463798f`). 0.2.10 위에 업데이트 설치됩니다. 0.2.10과 달라진 것은 고지 버전뿐이라 처음 실행 때 다시 동의를 받고, 배포 서버가 없어 접수는 앱 안 시연 데이터입니다. |
 | `apk/smart-journey-0.2.8-*.apk` | **이전 버전(최신 아님).** Gleo 승인 차단 전 빌드로, 비교용으로만 남겨 두었습니다. |
 
 무결성은 [`apk/SHA256SUMS.txt`](apk/SHA256SUMS.txt)로 확인합니다. 모든 APK는 같은 패키지라 바꿔 설치할 때는 먼저 `adb uninstall com.smartjourney.vehicle`을 실행합니다.
