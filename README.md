@@ -82,6 +82,7 @@
 
 | 파일 | 용도 |
 | --- | --- |
+| [`apk/안녕하세요햄냥이라고합니다_SmartJourney_release.apk`](apk/안녕하세요햄냥이라고합니다_SmartJourney_release.apk) | **제출용 배포 빌드 (팀명_앱이름_release.apk).** `apk/smart-journey-0.2.13-release.apk`와 같은 파일이며(SHA-256 `3e166ee901eeab735c5147c902955b21a77e377fb7463e4597ad2288276013c1`), 0.2.13 release 릴리스 키 서명·versionCode 15·소스 커밋 `845375373a4941e2d3b0ffb80a8d9d4aa9f94deb`입니다. |
 | [`apk/smart-journey-0.2.13-server-debug.apk`](apk/smart-journey-0.2.13-server-debug.apk) | **최신 시연용 (0.2.13, 데모 패널 포함).** 콜드부팅 직후 순정 내비 자동 전환과 1초 단위 웨이팅 팝업 깜빡임을 수정한 디버그 빌드입니다(versionCode 15, 소스 커밋 `845375373a4941e2d3b0ffb80a8d9d4aa9f94deb`). 서버·웹 연동과 데모 패널 사용법은 0.2.11 debug와 같습니다. |
 | [`apk/smart-journey-0.2.13-release.apk`](apk/smart-journey-0.2.13-release.apk) | **최신 배포 빌드 (0.2.13).** 0.2.12 release와 같은 릴리스 키 서명(versionCode 15, 소스 커밋 `845375373a4941e2d3b0ffb80a8d9d4aa9f94deb`)이라 `adb install -r`로 업데이트됩니다. 콜드부팅 에뮬레이터(`emulator-5554`)에서 `0.2.12 → 0.2.13` 업데이트 설치 및 실제 SDK 신호 실행(순정 내비 자동 전환·깜빡임 없는 팝업·터치 승인·종료 확인창)까지 확인했습니다([기록](https://github.com/smartjourney-pleos/smart-journey-android/blob/main/docs/verification/release-0.2.13.md)). |
 | [`apk/smart-journey-0.2.12-server-debug.apk`](apk/smart-journey-0.2.12-server-debug.apk) | **이전 시연용 (0.2.12, 데모 패널 포함).** 0.2.11 debug와 코드는 같고 디자이너 앱 아이콘(라이트·다크)과 버전 표기만 바뀐 빌드입니다(versionCode 14, 소스 커밋 `88652da`). |
